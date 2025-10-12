@@ -17,10 +17,10 @@ public class ContactController {
     //private static Logger log = LoggerFactory.getLogger(ContactController.class);
 
     @Autowired
-    private final ContactService contactService;
+    private final Contact contactService;
 
-    public ContactController(ContactService contactService) {
-        this.contactService = contactService;
+    public ContactController( Contact contactService) {
+        this.contactService = Contact;
     }
 
     @RequestMapping("/contact")
