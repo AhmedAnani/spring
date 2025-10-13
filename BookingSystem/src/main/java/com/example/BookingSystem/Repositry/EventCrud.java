@@ -4,5 +4,6 @@ import com.example.BookingSystem.Model.EventModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventCrud extends JpaRepository<EventModel,Integer> {
-  EventModel  findByTitle(String title);
+
+  void deleteById(int id);
 }

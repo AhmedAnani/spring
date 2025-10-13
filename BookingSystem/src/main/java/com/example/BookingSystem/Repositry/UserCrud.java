@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface UserCrud extends JpaRepository<UserModel,Integer> {
     UserModel findByEmail(String mail);
-
+    void deleteById(int id);
 }

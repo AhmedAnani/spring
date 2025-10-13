@@ -5,6 +5,7 @@ import com.example.BookingSystem.Service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -36,12 +37,32 @@ public class SecurityConfigration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(c->c.disable())
-        .authorizeHttpRequests(auth->auth.requestMatchers("/event/**").hasAnyRole("Admin","ADMIN")
-                .requestMatchers("/user/**").hasAnyRole("Admin","ADMIN")
-                .requestMatchers("/booking/**").hasAnyRole("Admin","ADMIN")
-                .requestMatchers("/event/getAll").permitAll()
-                .requestMatchers("/user/myProfile").hasAnyRole("User","USER","Admin","ADMIN")
-                .requestMatchers("/user/booking/myBooking").hasAnyRole("User","USER")
+        .authorizeHttpRequests(auth->auth
+
+                // Public Access
+                .requestMatchers(HttpMethod.POST,"/users").permitAll()
+                .requestMatchers(HttpMethod.GET,"/events").permitAll()
+
+                // Admin Access
+                .requestMatchers(HttpMethod.GET,"/users").hasRole("Admin")
+                .requestMatchers(HttpMethod.DELETE,"/users/{id}").hasRole("Admin")
+                .requestMatchers(HttpMethod.GET,"/users/{id}").hasRole("Admin")
+                .requestMatchers(HttpMethod.POST,"/events").hasRole("Admin")
+                .requestMatchers(HttpMethod.PUT,"/events/{id}").hasRole("Admin")
+                .requestMatchers(HttpMethod.DELETE,"/events/{id}").hasRole("Admin")
+                .requestMatchers(HttpMethod.GET,"/bookings").hasRole("Admin")
+
+
+
+                // User Access
+                .requestMatchers(HttpMethod.PUT,"/users/{id}").hasRole("User")
+                .requestMatchers(HttpMethod.GET,"/users/myBookings/{id}").hasRole("User")
+                .requestMatchers(HttpMethod.GET,"/events/{id}").hasRole("User")
+                .requestMatchers(HttpMethod.POST,"/bookings").hasRole("User")
+                .requestMatchers(HttpMethod.DELETE,"/bookings/{id}").hasRole("User")
+                .requestMatchers(HttpMethod.PUT,"/bookings/{id}").hasRole("User")
+                .requestMatchers(HttpMethod.GET,"/booking/{id}").hasRole("User")
+
         )
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());

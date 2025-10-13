@@ -2,33 +2,45 @@ package com.example.BookingSystem.Controller;
 
 import com.example.BookingSystem.Model.BookingModel;
 import com.example.BookingSystem.Service.BookingService;
+import com.example.BookingSystem.api.BookingApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/booking")
-public class BookingController {
+
+public class BookingController implements BookingApi {
     @Autowired
    private BookingService service;
 
-    @PostMapping("/save")
-    private String saveBooking(@RequestBody BookingModel model){
-        try {
-            service.saveBooking(model);
-            return "Saved The Booking Successfully";
-        } catch (Exception e) {
-            return e.toString();
-        }
+
+
+    public ResponseEntity<String> saveBooking( BookingModel model){
+
+        return service.saveBooking(model);
     }
 
-    @GetMapping("/getAll")
-    private List<BookingModel> getAllBookings(){
+    public List<BookingModel> getAllBookings(){
         return service.getAllBookings();
     }
 
+
+    public BookingModel findById(int id){
+
+            return service.findById(id);
+
+    }
+
+    public ResponseEntity<String> deleteBooking( int userId){
+
+            return service.deleteBookingById(userId);
+    }
+
+    public ResponseEntity<String> updateBookingByUserId( int id,BookingModel bookingModel){
+        return service.updateBookingByUserId(id, bookingModel);
+    }
 
 }

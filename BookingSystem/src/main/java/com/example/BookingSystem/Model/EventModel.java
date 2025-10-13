@@ -11,9 +11,9 @@ import java.util.Date;
 @Table(name = "events")
 public class EventModel extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
-    private int eventId;
+    private int id;
 
     @Column
     private String title;
@@ -25,13 +25,13 @@ public class EventModel extends BaseEntity {
     private String location;
 
     @Column(name ="event_date" )
-    private String eventDate;
+    private Date eventDate;
 
     @Column(name = "total_seats")
-    private String totalSeats;
+    private int totalSeats;
 
     @Column(name = "available_seats")
-    private String availableSeats;
+    private int availableSeats;
 
     @Column
     private long price;
