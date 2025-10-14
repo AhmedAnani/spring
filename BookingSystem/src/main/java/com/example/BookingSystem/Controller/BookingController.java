@@ -14,7 +14,7 @@ import java.util.List;
 
 public class BookingController implements BookingApi {
     @Autowired
-   private BookingService service;
+    private BookingService service;
 
 
 

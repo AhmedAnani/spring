@@ -14,11 +14,17 @@ import java.util.List;
 
 @Service
 public class UserService {
-    @Autowired
-  private UserCrud crud;
 
+    private final  UserCrud crud;
+    private final  BookingCrud bookingCrud;
     @Autowired
-    private BookingCrud bookingCrud;
+    public UserService(UserCrud crud, BookingCrud bookingCrud){
+        this.crud=crud;
+        this.bookingCrud=bookingCrud;
+    }
+
+
+
 
 
     public ResponseEntity<String> saveUser(UserModel model){
@@ -26,7 +32,7 @@ public class UserService {
             crud.save(model);
             return ResponseEntity.status(HttpStatus.CREATED).body("User Saved Successfully");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+             throw new RuntimeException(e);
         }
     }
 
@@ -54,7 +60,7 @@ public class UserService {
             crud.deleteById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User Deleted Successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
         }
     }
 
@@ -75,7 +81,7 @@ public class UserService {
                 return ResponseEntity.ok("User Updated Successfully ");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
         }
     }
 

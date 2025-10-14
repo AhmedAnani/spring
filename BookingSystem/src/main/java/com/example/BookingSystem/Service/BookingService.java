@@ -15,12 +15,19 @@ import java.util.List;
 
 @Service
 public class BookingService {
+
+    private final BookingCrud bookingCrud;
+
+    private final EventService eventService;
+
+    private final UserService userService;
+
     @Autowired
-    private BookingCrud bookingCrud;
-    @Autowired
-    private EventService eventService;
-    @Autowired
-    private UserService userService;
+    public BookingService(BookingCrud bookingCrud,EventService eventService,UserService userService){
+        this.bookingCrud=bookingCrud;
+        this.eventService=eventService;
+        this.userService=userService;
+    }
 
     public ResponseEntity<String>  saveBooking(BookingModel bookingModel){
 
@@ -38,7 +45,7 @@ public class BookingService {
                 return ResponseEntity.status(HttpStatus.CREATED).body("Booking Saved Successfully");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
         }
     }
 
@@ -69,7 +76,7 @@ public class BookingService {
              bookingCrud.deleteById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Booking Canceled Successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
         }
     }
 
@@ -89,7 +96,7 @@ public class BookingService {
                return ResponseEntity.ok("Updated Successfully");
            }
        } catch (Exception e) {
-          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString()) ;
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString()) ;
        }
     }
 

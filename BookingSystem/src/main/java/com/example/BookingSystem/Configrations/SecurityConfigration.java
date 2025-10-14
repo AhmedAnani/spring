@@ -42,6 +42,9 @@ public class SecurityConfigration {
                 // Public Access
                 .requestMatchers(HttpMethod.POST,"/users").permitAll()
                 .requestMatchers(HttpMethod.GET,"/events").permitAll()
+                .requestMatchers("/swagger-ui/index.html").permitAll()
+                .requestMatchers("/swagger-ui.html").permitAll()
+                .requestMatchers("/v3/api-docs").permitAll()
 
                 // Admin Access
                 .requestMatchers(HttpMethod.GET,"/users").hasRole("Admin")

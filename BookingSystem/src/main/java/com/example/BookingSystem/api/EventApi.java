@@ -23,7 +23,8 @@ public interface EventApi {
     @GetMapping("/{id}")
      EventModel findById(@PathVariable int eventId);
 
-    @PutMapping("/update/{id}")
+    //Found Event BY EventId For Updating
+    @PutMapping("/{id}")
      ResponseEntity<String> updateEvent(@PathVariable int eventId, @RequestBody EventModel model);
 
     @DeleteMapping("/{id}")

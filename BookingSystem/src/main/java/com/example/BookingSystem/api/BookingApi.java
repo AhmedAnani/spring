@@ -23,9 +23,9 @@ public interface BookingApi {
 
     // Delete Booking By User Id
     @DeleteMapping("/{id}")
-     ResponseEntity<String> deleteBooking(@RequestParam int userId);
+     ResponseEntity<String> deleteBooking(@PathVariable int userId);
 
     //Update Booking By User
     @PutMapping("/{id}")
-     ResponseEntity<String> updateBookingByUserId( int id, BookingModel bookingModel);
+     ResponseEntity<String> updateBookingByUserId(@PathVariable int id, @RequestBody BookingModel bookingModel);
 }

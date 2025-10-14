@@ -12,8 +12,12 @@ import java.util.List;
 
 @Service
 public class EventService {
+
+   private final EventCrud crud;
     @Autowired
-   private EventCrud crud;
+    public  EventService(EventCrud crud){
+        this.crud=crud;
+    }
 
     //fun for saving the event
     public ResponseEntity<String> addEvent(EventModel eventModel) {
@@ -52,7 +56,7 @@ public class EventService {
                 return ResponseEntity.ok("Event Updated Successfully");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
         }
 
     }
@@ -67,7 +71,7 @@ public class EventService {
     public ResponseEntity<String> deleteEventById(int id){
             try {
             crud.deleteById(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Event Deleted Successfully");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Event Deleted Successfully");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

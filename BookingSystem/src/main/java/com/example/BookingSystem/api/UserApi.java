@@ -30,7 +30,7 @@ public interface UserApi {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable int id);
 
-    // Get UserBookings
-    @GetMapping("/Bookings/{id}")
+    // Get UserBookings By
+    @GetMapping("/{id}/bookings")
     public BookingModel FindMyBookings(@PathVariable int userId);
 }

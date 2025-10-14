@@ -26,7 +26,7 @@ public class EventController implements EventApi {
 
     public EventModel findById( int eventId){return service.findById(eventId);}
 
-    //Found Event BY EventTitle For Updating
+
     public ResponseEntity<String> updateEvent( int eventId,  EventModel model){
         return service.updateByEventId(eventId,model);
     }
