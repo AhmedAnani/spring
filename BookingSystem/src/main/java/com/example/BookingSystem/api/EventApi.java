@@ -1,10 +1,9 @@
 package com.example.BookingSystem.api;
 
 import com.example.BookingSystem.Model.EventModel;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 //swagger api
 //yaml file
@@ -17,7 +16,8 @@ public interface EventApi {
 
     //Get All Events
     @GetMapping
-     List<EventModel> getAllEvents();
+    Page<EventModel> getAllEvents(@RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "5") int size);
 
     //Found The Event By EventTitle
     @GetMapping("/{id}")

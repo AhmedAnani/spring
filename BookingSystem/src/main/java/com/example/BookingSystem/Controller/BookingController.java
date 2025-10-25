@@ -4,6 +4,7 @@ import com.example.BookingSystem.Model.BookingModel;
 import com.example.BookingSystem.Service.BookingService;
 import com.example.BookingSystem.api.BookingApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
 public class BookingController implements BookingApi {
     @Autowired
-    private BookingService service;
+     private BookingService service;
+
 
 
 
@@ -23,8 +24,8 @@ public class BookingController implements BookingApi {
         return service.saveBooking(model);
     }
 
-    public List<BookingModel> getAllBookings(){
-        return service.getAllBookings();
+    public Page<BookingModel> findAllByOrderByBookingDateAsc(int page,int size){
+        return service.getAllBookingsOrderByBookingDate( page,size);
     }
 
 

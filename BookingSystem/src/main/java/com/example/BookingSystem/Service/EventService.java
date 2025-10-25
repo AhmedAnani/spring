@@ -3,6 +3,10 @@ package com.example.BookingSystem.Service;
 import com.example.BookingSystem.Model.EventModel;
 import com.example.BookingSystem.Repositry.EventCrud;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,9 +33,10 @@ public class EventService {
         }
     }
 
-    public List<EventModel> findAllEvents(){
+    public Page<EventModel> findAllEvents(int page, int size){
         try {
-            return crud.findAll();
+            Pageable pageable = PageRequest.of(page, size, Sort.by("total_seats").descending());
+            return crud.findAllByOrderByTotalSeatsDesc(pageable);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -41,8 +46,8 @@ public class EventService {
     public ResponseEntity<String> updateByEventId(int eventId,EventModel model) {
         EventModel event = crud.getById(eventId);
         try {
-            if (event == null) return ResponseEntity.ok("Event Not Found");
-            else {
+            if (event == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event Not Found");
+
                 event.setTitle(model.getTitle());
                 event.setDescription(model.getDescription());
                 event.setLocation(model.getLocation());
@@ -54,9 +59,8 @@ public class EventService {
                 event.setUpdatedBy(model.getUpdatedBy());
                 addEvent(event);
                 return ResponseEntity.ok("Event Updated Successfully");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
+            } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString());
         }
 
     }

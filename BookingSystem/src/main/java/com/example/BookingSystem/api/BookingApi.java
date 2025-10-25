@@ -1,6 +1,7 @@
 package com.example.BookingSystem.api;
 
 import com.example.BookingSystem.Model.BookingModel;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public interface BookingApi {
 
     // Get All Bookings
     @GetMapping
-     List<BookingModel> getAllBookings();
+    Page<BookingModel> findAllByOrderByBookingDateAsc(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size);
 
     // Find Bookings By Booking Id
     @GetMapping("/{id}")
@@ -28,4 +29,5 @@ public interface BookingApi {
     //Update Booking By User
     @PutMapping("/{id}")
      ResponseEntity<String> updateBookingByUserId(@PathVariable int id, @RequestBody BookingModel bookingModel);
+
 }

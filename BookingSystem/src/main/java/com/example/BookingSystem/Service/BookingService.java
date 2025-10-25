@@ -5,8 +5,12 @@ import com.example.BookingSystem.Model.EventModel;
 import com.example.BookingSystem.Model.UserModel;
 import com.example.BookingSystem.Repositry.BookingCrud;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -50,12 +54,13 @@ public class BookingService {
     }
 
 
-    public List<BookingModel> getAllBookings(){
-       try {
-           return bookingCrud.findAll();
-       } catch (Exception e) {
-           throw new RuntimeException(e);
-       }
+    public Page<BookingModel> getAllBookingsOrderByBookingDate(int page,int size){
+        try {
+            Pageable pageable= PageRequest.of(page,size);
+            return bookingCrud.findAllByOrderByBookingDateAsc(pageable);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public BookingModel findById(int id){
@@ -99,5 +104,7 @@ public class BookingService {
           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString()) ;
        }
     }
+
+
 
 }
