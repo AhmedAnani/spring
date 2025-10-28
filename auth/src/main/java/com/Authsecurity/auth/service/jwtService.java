@@ -1,22 +1,14 @@
 package com.Authsecurity.auth.service;
 
-import com.Authsecurity.auth.model.UserModle;
-import io.jsonwebtoken.Claims;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.io.IOException;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.security.Key;
 import java.util.*;
-import java.util.function.Function;
 
 @Service
 public class jwtService {

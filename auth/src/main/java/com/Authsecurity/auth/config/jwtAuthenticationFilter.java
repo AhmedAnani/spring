@@ -1,7 +1,5 @@
 package com.Authsecurity.auth.config;
 
-import com.Authsecurity.auth.model.UserModle;
-import com.Authsecurity.auth.repositry.UserRepo;
 import com.Authsecurity.auth.service.jwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,7 +9,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

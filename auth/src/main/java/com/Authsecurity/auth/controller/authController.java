@@ -1,5 +1,6 @@
 package com.Authsecurity.auth.controller;
 
+import com.Authsecurity.auth.api.authApi;
 import com.Authsecurity.auth.model.UserModle;
 import com.Authsecurity.auth.service.jwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +12,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/auth")
-public class authController {
+
+public class authController implements authApi {
+
+
+    private final AuthenticationManager authenticationManager;
+
+
+     private final jwtService jwtService;
+
+
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    public authController(AuthenticationManager authenticationManager, jwtService jwtService, UserDetailsService userDetailsService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService;
+    }
 
-    @Autowired
-     private jwtService jwtService;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @PostMapping("/login")
-    public ResponseEntity<String> createToken(@RequestBody UserModle userModle ) {
+    public ResponseEntity<String> createToken(UserModle userModle ) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userModle.getEmail(), userModle.getPassword())
@@ -37,13 +43,13 @@ public class authController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user Not Found");
         }
     }
-    @GetMapping("/ch")
+
     public  ResponseEntity<String> check(){
-try{
-    return ResponseEntity.ok("checked");
-} catch (Exception e) {
-  return ResponseEntity.ok(  new RuntimeException(e).toString());
-}
+        try{
+            return ResponseEntity.ok("checked");
+        } catch (Exception e) {
+          return ResponseEntity.ok(  new RuntimeException(e).toString());
+        }
 
     }
 

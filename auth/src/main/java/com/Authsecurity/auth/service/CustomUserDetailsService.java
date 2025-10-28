@@ -2,7 +2,6 @@ package com.Authsecurity.auth.service;
 
 import com.Authsecurity.auth.model.UserModle;
 import com.Authsecurity.auth.repositry.UserRepo;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
