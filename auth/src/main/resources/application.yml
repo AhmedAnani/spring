@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookings
+    username: postgres
+    password: 1234
+  jpa:
+    show-sql: true
+logging:
+    level:
+      org.springframework.security: DEBUG
