@@ -3,6 +3,7 @@ package com.Authsecurity.auth.controller;
 import com.Authsecurity.auth.api.authApi;
 import com.Authsecurity.auth.model.UserModle;
 import com.Authsecurity.auth.service.jwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,26 +13,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-
+@RestController
+@RequestMapping("/auth")
+@RequiredArgsConstructor
 public class authController implements authApi {
 
+     @Autowired
+     private final AuthenticationManager authenticationManager;
 
-    private final AuthenticationManager authenticationManager;
-
-
+     @Autowired
      private final jwtService jwtService;
 
-
+    @Autowired
     private final UserDetailsService userDetailsService;
 
-    @Autowired
-    public authController(AuthenticationManager authenticationManager, jwtService jwtService, UserDetailsService userDetailsService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
-    }
 
-    public ResponseEntity<String> createToken(UserModle userModle ) {
+    @PostMapping("/login")
+    public ResponseEntity<String> createToken(@RequestBody UserModle userModle ) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userModle.getEmail(), userModle.getPassword())
@@ -43,9 +41,10 @@ public class authController implements authApi {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user Not Found");
         }
     }
-
+    @GetMapping("/ch")
     public  ResponseEntity<String> check(){
         try{
+
             return ResponseEntity.ok("checked");
         } catch (Exception e) {
           return ResponseEntity.ok(  new RuntimeException(e).toString());

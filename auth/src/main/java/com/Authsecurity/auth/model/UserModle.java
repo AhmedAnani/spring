@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,24 +22,31 @@ import java.util.List;
 public class UserModle implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private int userId;
+    private Long id;
+
+    @Column
+    private String email;
+
+    @Column
+    private String password;
 
     @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "second_name")
+    private String secondName;
 
-    @Column()
-    private String email;
+    @Column
+    private String otp;
 
-    @Column()
-    private String password;
+    @Column(name = "otp_expiration")
+    private LocalDateTime otpExpiration;
 
-    @Column()
-    private String role;
+    @Column
+    private Boolean verified = false;
 
+    @Column
+    private String role = "USER";
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(getRole()));

@@ -39,7 +39,7 @@ public class jwtAuthenticationFilter extends OncePerRequestFilter {
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.service.loadUserByUsername(email);
                 boolean valid = jwtService.validateToken(jwt, userDetails);
-                System.out.println("Token valid: " + valid);
+
                 if (valid) {
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -48,7 +48,7 @@ public class jwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
-            System.out.println(">>> JWT filter triggered for URI: " + request.getRequestURI());
+
 
         }
     filterChain.doFilter(request,response);
